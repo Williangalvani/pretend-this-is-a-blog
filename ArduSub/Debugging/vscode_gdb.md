@@ -23,7 +23,24 @@ launch.json:
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
+        // The multiarch profile is used to attach to a Navigator board running ArduSub
+        {
+            "name": "Gdb multiarch debugging Navigator",
+            "type": "cppdbg",
+            "request": "launch",
+            "miDebuggerPath": "/opt/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf/bin/arm-none-linux-gnueabihf-gdb",
+            "miDebuggerArgs": "--cd=${workspaceFolder} --nx",
+            "MIMode": "gdb",
+             "program": "${workspaceFolder}/build/navigator/bin/ardusub",
+              "setupCommands": [
+                {"text": "set remotetimeout 5"},
+                {"text": "target remote blueos.local:5555"},
+                {"text": "set sysroot remote target:"},
+            ],
+            "launchCompleteCommand": "None",
+            "externalConsole": false,
+            "cwd": "${workspaceFolder}"
+        },
     // The attach profiles are used to connect to a running instance of SITL (ie the executable)
         {
             "name": "(gdb) Attach Sub",
